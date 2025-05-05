@@ -1,0 +1,10 @@
+module image-processor
+
+go 1.18
+
+require (
+    image 0.0.0 // indirect
+    image/png 0.0.0 // indirect
+    image/jpeg 0.0.0 // indirect
+    image/gif 0.0.0 // indirect
+)
