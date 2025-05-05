@@ -27,7 +27,7 @@ func main() {
     }
 
     // Load the image
-    img, err := utils.LoadImage(*inputPath)
+    img, err := utils.LoadImageFromPath(*inputPath)
     if err != nil {
         log.Fatalf("Error loading image: %v", err)
     }
