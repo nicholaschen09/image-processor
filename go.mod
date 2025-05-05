@@ -1,7 +1,7 @@
 module image-processor
 
-go 1.18
+go 1.23.0
 
-require (
-    github.com/disintegration/imaging v1.6.2
-)
+toolchain go1.24.2
+
+require golang.org/x/image v0.26.0

@@ -1,10 +1,2 @@
-module image-processor
-
-go 1.18
-
-require (
-    image 0.0.0 // indirect
-    image/png 0.0.0 // indirect
-    image/jpeg 0.0.0 // indirect
-    image/gif 0.0.0 // indirect
-)
+golang.org/x/image v0.26.0 h1:4XjIFEZWQmCZi6Wv8BoxsDhRU3RVnLX04dToTDAEPlY=
+golang.org/x/image v0.26.0/go.mod h1:lcxbMFAovzpnJxzXS3nyL83K27tmqtKzIJpctK8YO5c=

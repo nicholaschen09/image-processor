@@ -3,44 +3,35 @@ package filters
 import (
     "image"
     "image/color"
+    "math"
 )
 
-// Sepia applies a sepia tone to the given image.
-func Sepia(img image.Image) *image.RGBA {
+// Sepia is a filter that implements the Filter interface
+type Sepia struct{}
+
+// Apply converts the image to sepia tone
+func (s Sepia) Apply(img image.Image) image.Image {
     bounds := img.Bounds()
     sepiaImg := image.NewRGBA(bounds)
-
+    
     for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
         for x := bounds.Min.X; x < bounds.Max.X; x++ {
-            originalColor := img.At(x, y)
-            r, g, b, a := originalColor.RGBA()
-
-            // Convert to sepia
-            tr := (0.393 * float64(r>>8)) + (0.769 * float64(g>>8)) + (0.189 * float64(b>>8))
-            tg := (0.349 * float64(r>>8)) + (0.686 * float64(g>>8)) + (0.168 * float64(b>>8))
-            tb := (0.272 * float64(r>>8)) + (0.534 * float64(g>>8)) + (0.131 * float64(b>>8))
-
-            // Clamp values to 0-255
-            if tr > 255 {
-                tr = 255
-            }
-            if tg > 255 {
-                tg = 255
-            }
-            if tb > 255 {
-                tb = 255
-            }
-
-            sepiaColor := color.RGBA{
-                R: uint8(tr),
-                G: uint8(tg),
-                B: uint8(tb),
-                A: uint8(a >> 8),
-            }
-
-            sepiaImg.Set(x, y, sepiaColor)
+            oldColor := img.At(x, y)
+            r, g, b, a := oldColor.RGBA()
+            
+            // Convert to 8-bit components
+            r8 := float64(r >> 8)
+            g8 := float64(g >> 8)
+            b8 := float64(b >> 8)
+            
+            // Apply sepia formula
+            newR := uint8(math.Min(0.393*r8+0.769*g8+0.189*b8, 255))
+            newG := uint8(math.Min(0.349*r8+0.686*g8+0.168*b8, 255))
+            newB := uint8(math.Min(0.272*r8+0.534*g8+0.131*b8, 255))
+            
+            sepiaImg.Set(x, y, color.RGBA{newR, newG, newB, uint8(a >> 8)})
         }
     }
-
+    
     return sepiaImg
 }
